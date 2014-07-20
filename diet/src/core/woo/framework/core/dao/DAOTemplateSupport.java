@@ -44,6 +44,38 @@ public class DAOTemplateSupport<T> {
 		return new ResultSets(rs);
 	}
 	
+	private static final String COUNT_HEAD = " select count(*) ";
+	protected PaginationBean<T> paging(String sql, List<Object> params,RowMapper<T> rowMapper, int currentPage, int pageSize){
+		
+		String countSql = COUNT_HEAD + getSqlFrom(sql);
+		int recordCount = this.queryForInt(countSql, params);
+		PaginationBean<T> pb = new PaginationBean<T>(currentPage, pageSize, recordCount);
+		
+		String pagingSql = sql + " limit " + pb.getRecordIndex() + ", " + pageSize;
+		List<T> dataList = queryForList(rowMapper, pagingSql, params);
+		
+		return pb.setDataList(dataList);
+	}
+	
+	protected PaginationBean<T> paging(String sql, Object[] params,RowMapper<T> rowMapper, int currentPage, int pageSize){
+		
+		String countSql = COUNT_HEAD + getSqlFrom(sql);
+		int recordCount = this.queryForInt(countSql, params);
+		PaginationBean<T> pb = new PaginationBean<T>(currentPage, pageSize, recordCount);
+		
+		String pagingSql = sql + " limit " + pb.getRecordIndex() + ", " + pageSize;
+		List<T> dataList = queryForList(rowMapper, pagingSql, params);
+		
+		return pb.setDataList(dataList);
+	}
+	
+	private String getSqlFrom(String sql){
+		int index = sql.toLowerCase().indexOf("from");
+		return sql.substring(index);
+	}
+	
+	
+	
 	/**
 	 * 查询一堆对象
 	 */
@@ -74,6 +106,18 @@ public class DAOTemplateSupport<T> {
 	protected T queryForObject(RowMapper<T> rowMapper, String sql){
 		return query(sql, EMPTY, QUERY).getObject(rowMapper);
 	}
+	
+	
+	protected int queryForInt(String sql){
+		return query(sql, EMPTY, QUERY).getInt();
+	}
+	protected int queryForInt(String sql, Object... params){
+		return query(sql, new ArraySQLParameter(params), QUERY).getInt();
+	}
+	protected int queryForInt(String sql, List<Object> params){
+		return query(sql, new ListSQLParameter(params), QUERY).getInt();
+	}
+	
 	
 	protected Map<String, Object> queryForMap(String sql, Object... params){
 		return query(sql, new ArraySQLParameter(params), QUERY).getMap();
