@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="diet">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/config"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/common"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/diet/record"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/diet"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/core"/>
+        <property name="context-root" value="diet"/>
+        <property name="java-output-path" value="/diet/build/classes"/>
+    </wb-module>
+</project-modules>
