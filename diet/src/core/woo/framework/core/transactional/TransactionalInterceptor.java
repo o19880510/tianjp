@@ -54,7 +54,7 @@ public class TransactionalInterceptor implements MethodInterceptor {
 						log.debug("NOT_SUPPORTED in...");
 						manager.setNoTransaction();
 						result = methodProxy.invokeSuper(enhaner, params);
-						manager.commit();
+						manager.close();
 						
 						break;
 					}
@@ -62,10 +62,15 @@ public class TransactionalInterceptor implements MethodInterceptor {
 				
 			}catch(Exception e){
 				manager.rollback();
-				log.error("REQUIRED ",e);
-				throw new RuntimeException(e);
+				log.error(propagation + "", e);
 			}
 
+		}else{
+			try{
+				result = methodProxy.invokeSuper(enhaner, params);
+			}catch(Exception e){
+				throw new RuntimeException(e);
+			}
 		}
 		return result;
 	}

@@ -107,6 +107,12 @@ public class TransactionManager implements Transaction, ConnectionPool{
 		});
 	}
 	
+	@Override
+	public void close() {
+		this.close(null);
+		
+	}
+	
 	
 	@Override
 	public Connection getConnection() {

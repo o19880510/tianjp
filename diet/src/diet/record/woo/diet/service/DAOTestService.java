@@ -38,7 +38,7 @@ public class DAOTestService {
 		
 		log.debug("useCount:"+ParameterSetterFactory.useCount());
 		
-		save2();
+		// save2();
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
