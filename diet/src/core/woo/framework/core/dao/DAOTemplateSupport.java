@@ -144,6 +144,14 @@ public class DAOTemplateSupport<T> {
 		return query(sql, EMPTY, SAVE_GET_KEY).getlong();
 	}
 	protected Serializable saveGetKey(String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), SAVE_GET_KEY).getlong();
+		return query(sql, new ArraySQLParameter(params), SAVE_GET_KEY).getInt();
+	}
+	
+	protected void remove(String sql){
+		query(sql, EMPTY, SAVE_UPDATE);
+	}
+	
+	protected void remove(String sql, Object... params){
+		query(sql, new ArraySQLParameter(params), SAVE_UPDATE);
 	}
 }

@@ -28,7 +28,7 @@ public class TransactionManager implements Transaction, ConnectionPool{
 	
 	private Connection getConnectionFromDS(){
 		try {
-			return dataSource.getConnection();
+			return getDataSource().getConnection();
 		} catch (SQLException e) {
 			log.error("TransactionManager getConnectionFromDS error!", e);
 			throw new RuntimeException("TransactionManager getConnectionFromDS error!", e);
@@ -36,7 +36,7 @@ public class TransactionManager implements Transaction, ConnectionPool{
 	}
 	private Connection getConnectionWithTransFromDS(){
 		try {
-			Connection conn =  dataSource.getConnection();
+			Connection conn =  getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			return conn;
 		} catch (SQLException e) {

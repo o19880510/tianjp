@@ -7,6 +7,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/diet/record"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/diet"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/core"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/others"/>
         <property name="context-root" value="diet"/>
         <property name="java-output-path" value="/diet/build/classes"/>
     </wb-module>
