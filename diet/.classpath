@@ -5,6 +5,7 @@
 	<classpathentry kind="src" path="src/core"/>
 	<classpathentry kind="src" path="src/common"/>
 	<classpathentry kind="src" path="src/diet/record"/>
+	<classpathentry kind="src" path="src/others"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JAVAEE6"/>
