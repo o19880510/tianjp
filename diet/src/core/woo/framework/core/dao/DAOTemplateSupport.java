@@ -37,7 +37,7 @@ public class DAOTemplateSupport<T> {
 		return manager.getConnection();
 	}
 	
-	private ResultSets query(String sql, SQLParameter sqlParameter, Execute execute) {
+	private ResultSets execute(String sql, SQLParameter sqlParameter, Execute execute) {
 		PreparedStatement pStatement = PS_CREATE.create(getConnection(), sql);
 		sqlParameter.set(pStatement);
 		ResultSet rs = execute.execute(pStatement);
@@ -80,15 +80,15 @@ public class DAOTemplateSupport<T> {
 	 * 查询一堆对象
 	 */
 	protected List<T> queryForList(RowMapper<T> rowMapper, String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), QUERY).getList(rowMapper);
+		return execute(sql, new ArraySQLParameter(params), QUERY).getList(rowMapper);
 	}
 	
 	protected List<T> queryForList(RowMapper<T> rowMapper, String sql, List params){
-		return query(sql, new ListSQLParameter(params), QUERY).getList(rowMapper);
+		return execute(sql, new ListSQLParameter(params), QUERY).getList(rowMapper);
 	}
 	
 	protected List<T> queryForList(RowMapper<T> rowMapper, String sql){
-		return query(sql, EMPTY, QUERY).getList(rowMapper);
+		return execute(sql, EMPTY, QUERY).getList(rowMapper);
 	}
 	
 	
@@ -96,54 +96,62 @@ public class DAOTemplateSupport<T> {
 	 * 查询单个对象
 	 */
 	protected T queryForObject(RowMapper<T> rowMapper, String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), QUERY).getObject(rowMapper);
+		return execute(sql, new ArraySQLParameter(params), QUERY).getObject(rowMapper);
 	}
 	
 	protected T queryForObject(RowMapper<T> rowMapper, String sql, List params){
-		return query(sql, new ListSQLParameter(params), QUERY).getObject(rowMapper);
+		return execute(sql, new ListSQLParameter(params), QUERY).getObject(rowMapper);
 	}
 	
 	protected T queryForObject(RowMapper<T> rowMapper, String sql){
-		return query(sql, EMPTY, QUERY).getObject(rowMapper);
+		return execute(sql, EMPTY, QUERY).getObject(rowMapper);
 	}
 	
 	
 	protected int queryForInt(String sql){
-		return query(sql, EMPTY, QUERY).getInt();
+		return execute(sql, EMPTY, QUERY).getInt();
 	}
 	protected int queryForInt(String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), QUERY).getInt();
+		return execute(sql, new ArraySQLParameter(params), QUERY).getInt();
 	}
 	protected int queryForInt(String sql, List<Object> params){
-		return query(sql, new ListSQLParameter(params), QUERY).getInt();
+		return execute(sql, new ListSQLParameter(params), QUERY).getInt();
 	}
 	
 	
 	protected Map<String, Object> queryForMap(String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), QUERY).getMap();
+		return execute(sql, new ArraySQLParameter(params), QUERY).getMap();
 	}
 	protected Map<String, Object> queryForMap(String sql){
-		return query(sql, EMPTY, QUERY).getMap();
+		return execute(sql, EMPTY, QUERY).getMap();
 	}
 	
 	protected List<Map<String, Object>> queryForListMap(String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), QUERY).getMapList();
+		return execute(sql, new ArraySQLParameter(params), QUERY).getMapList();
 	}
 	protected List<Map<String, Object>> queryForListMap(String sql ){
-		return query(sql, EMPTY, QUERY).getMapList();
+		return execute(sql, EMPTY, QUERY).getMapList();
 	}
 	
 	protected void saveOrUpdate(String sql){
-		query(sql, EMPTY, SAVE_UPDATE);
+		execute(sql, EMPTY, SAVE_UPDATE);
 	}
 	protected void saveOrUpdate(String sql, Object... params){
-		query(sql, new ArraySQLParameter(params), SAVE_UPDATE);
+		execute(sql, new ArraySQLParameter(params), SAVE_UPDATE);
 	}
 
 	protected Serializable saveGetKey(String sql){
-		return query(sql, EMPTY, SAVE_GET_KEY).getlong();
+		return execute(sql, EMPTY, SAVE_GET_KEY).getlong();
 	}
 	protected Serializable saveGetKey(String sql, Object... params){
-		return query(sql, new ArraySQLParameter(params), SAVE_GET_KEY).getlong();
+		return execute(sql, new ArraySQLParameter(params), SAVE_GET_KEY).getInt();
+	}
+	
+	protected void remove(String sql){
+		execute(sql, EMPTY, SAVE_UPDATE);
+	}
+	
+	protected void remove(String sql, Object... params){
+		execute(sql, new ArraySQLParameter(params), SAVE_UPDATE);
 	}
 }
