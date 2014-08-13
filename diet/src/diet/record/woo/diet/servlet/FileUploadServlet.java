@@ -40,7 +40,7 @@ public class FileUploadServlet extends HttpServlet {
 		System.out.println(file.getName());
 		System.out.println(file.getSize());
 		
-		file.getHeaderNames().forEach((s) -> {System.out.println(s);});
+		file.getHeaderNames().forEach( s -> System.out.println(s) );
 		//		file.write("/home/tianjp/D/XX.jpg");
 //		File newFile = new File("/home/tianjp/D/");
 		
