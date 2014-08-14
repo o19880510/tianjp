@@ -81,6 +81,7 @@
 	<filter-mapping>
 		<filter-name>SessionFilter</filter-name>
 		<url-pattern>/system/*</url-pattern>
+		<url-pattern>/diet/*</url-pattern>
 	</filter-mapping>
 	
 	<filter>
@@ -90,6 +91,7 @@
 	<filter-mapping>
 		<filter-name>PrivilegeCheckFilter</filter-name>
 		<url-pattern>/system/*</url-pattern>
+		<url-pattern>/diet/*</url-pattern>
 	</filter-mapping>
 	
 	
