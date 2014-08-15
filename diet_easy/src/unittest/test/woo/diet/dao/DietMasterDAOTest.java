@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import woo.diet.dao.DietMasterDAO;
 import woo.diet.model.entity.DietMaster;
 import woo.diet.model.entity.DietRecord;
 import woo.diet.service.DietMasterService;
@@ -19,9 +20,11 @@ import woo.diet.service.DietMasterService;
 @ContextConfiguration ( locations = "/root-context.xml" )
 public class DietMasterDAOTest {
 	
-	@Resource(name = "dietMasterService")
-	private DietMasterService dietMasterService;
+//	@Resource(name = "dietMasterService")
+//	private DietMasterService dietMasterService;
 	
+	@Resource(name = "dietMasterDAO")
+	private DietMasterDAO	dietMasterDAO;
 	
 	@Test
 	public void saveSingle(){
@@ -31,8 +34,8 @@ public class DietMasterDAOTest {
 		dietMaster.setDay(day.toLocalDate());
 		dietMaster.setMonth(day.getMonthOfYear());
 		dietMaster.setYear(day.getYear());
-		dietMaster.setUserId(1);
-		dietMasterService.save(dietMaster);
+		dietMaster.setUserId("1");
+		dietMasterDAO.save(dietMaster);
 	}
 	
 	
@@ -44,12 +47,12 @@ public class DietMasterDAOTest {
 		dietMaster.setDay(day.toLocalDate());
 		dietMaster.setMonth(day.getMonthOfYear());
 		dietMaster.setYear(day.getYear());
-		dietMaster.setUserId(1);
+		dietMaster.setUserId("1");
 		
-		List<DietRecord> list = createDietRecordList(day);
-		dietMaster.setDietRecordList(list);
+//		List<DietRecord> list = createDietRecordList(day);
+//		dietMaster.setDietRecordList(list);
 		
-		dietMasterService.save(dietMaster);
+		dietMasterDAO.save(dietMaster);
 	}
 	
 	private List<DietRecord> createDietRecordList(DateTime day){
@@ -74,9 +77,9 @@ public class DietMasterDAOTest {
 	
 	@Test
 	public void get(){
-		DateTime day = DateTime.now();
+		DateTime day = DateTime.now().plusDays(-1);
 
-		DietMaster dietMaster = dietMasterService.get(day.toLocalDate());
+		DietMaster dietMaster = dietMasterDAO.get(day.toLocalDate());
 		
 		System.out.println(dietMaster);
 		System.out.println(dietMaster.getDietRecordList().size());
@@ -86,8 +89,9 @@ public class DietMasterDAOTest {
 	@Test
 	public void getAll(){
 		
-		List<DietMaster> dietMasterList = dietMasterService.getAll();
+		List<DietMaster> dietMasterList = dietMasterDAO.getAll();
 		
 		System.out.println(dietMasterList);
 	}
+	
 }

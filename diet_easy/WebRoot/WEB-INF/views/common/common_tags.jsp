@@ -10,3 +10,4 @@
 <%@ taglib uri="/permission" prefix="permission" %>
 <%@ taglib uri="/mdata" prefix="mdata" %>
 
+<%@ page import="woo.diet.constants.*" %>

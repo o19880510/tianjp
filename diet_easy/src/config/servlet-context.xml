@@ -19,6 +19,13 @@
 		<context:exclude-filter type = "annotation" expression = "org.springframework.stereotype.Service" />
 	</context:component-scan>
 	
+	<context:component-scan base-package="woo.diet">
+		<context:include-filter type = "annotation" expression = "org.springframework.stereotype.Controller" />
+       
+		<context:exclude-filter type = "annotation" expression = "org.springframework.stereotype.Service" />
+	</context:component-scan>
+	
+	
 	<mvc:annotation-driven validator="validator"></mvc:annotation-driven>
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="validationMessageSource" ref="messageSource"></property>

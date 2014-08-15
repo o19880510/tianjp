@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
@@ -35,15 +36,24 @@ public class DietMaster implements Serializable {
 	private Integer				year;
 
 	@Column(name = "USER_ID")
-	private Integer				userId;
-
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn ( name = "day" )
-	@OrderBy("day type asc")
-	private List<DietRecord>	dietRecordList;
+	private String				userId;
+	
+	@Column(name = "WEATHER")
+	private String				weather;
+	
+	@Column(name = "TEMPERATURE")
+	private String				temperature;
+	
+//	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//	@JoinColumn ( name = "day" )
+//	@OrderBy("day type asc")
+//	private List<DietRecord>	dietRecordList;
+	
+	@Transient
+	private List<List<DietRecord>>	dietRecordList;
 	
 	public DietMaster(){
-		dietRecordList = new ArrayList<DietRecord>();
+		dietRecordList = new ArrayList<List<DietRecord>>();
 	}
 
 	public LocalDate getDay() {
@@ -70,20 +80,38 @@ public class DietMaster implements Serializable {
 		this.year = year;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public List<DietRecord> getDietRecordList() {
+	public List<List<DietRecord>> getDietRecordList() {
 		return dietRecordList;
 	}
 
-	public void setDietRecordList(List<DietRecord> dietRecordList) {
+	public void setDietRecordList(List<List<DietRecord>> dietRecordList) {
 		this.dietRecordList = dietRecordList;
+	}
+	
+	
+
+	public String getWeather() {
+		return weather;
+	}
+
+	public void setWeather(String weather) {
+		this.weather = weather;
+	}
+
+	public String getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
 	}
 
 	@Override
@@ -113,8 +141,8 @@ public class DietMaster implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DietMaster [day=" + day + ", month=" + month + ", year=" + year + ", userId=" + userId
-				+ ", dietRecordList=" + dietRecordList + "]";
+		return "DietMaster [day=" + day + ", month=" + month + ", year=" + year + ", userId=" + userId + ", weather="
+				+ weather + ", temperature=" + temperature + ", dietRecordList=" + dietRecordList + "]";
 	}
 	
 }
