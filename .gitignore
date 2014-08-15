@@ -1,1 +1,5 @@
 *.class
+diet/WebContent/WEB-INF/classes/log4j-1.2.dtd
+diet/WebContent/WEB-INF/classes/log4j.xml
+
+*.jar
