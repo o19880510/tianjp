@@ -18,22 +18,29 @@
 		</div>
 		<div id="addAccordion" class="accordion-body in">
 			<div class="accordion-inner">
-				<form:form action="list.do" method="post" modelAttribute="dietReq" cssClass="form-inline">
-					<%-- <label>用户ID/昵称
-					<form:input path="name"/>
+				<form:form id="diet" action="list.do" method="post" modelAttribute="dietReq" cssClass="form-inline">
+					<%-- --%>
+					<label>类型
+					<form:input path="type"/>
 					</label>
-					<label>状态</label>
-					<form:select path="status" cssClass="span1">
-						<form:option value="">所有</form:option>
-						<codetable:option table="BEHAVIOR_TYPE"/>
-					</form:select>
+					<label>子类型
+					<form:input path="subType"/>
+					</label>
+					
+					<label for="from">日期
+						<form:input path="startDate" cssClass="input-small Wdate" onclick="WdatePicker()"/>
+					</label>
+					<label for="to">至
+						<form:input path="endDate" cssClass="input-small Wdate" onclick="WdatePicker()"/>
+					</label>
 					
 					<div class="btn-group">
 						<form:hidden path="current"/>
 						<form:hidden path="pageSize"/>
-						<a href="#" onclick="$('#user').submit(); return false;" class="btn">查询</a>
+						<a href="#" onclick="$('#diet').submit(); return false;" class="btn">查询</a>
 						<a href="add.do" class="btn">新增</a>
-					</div> --%>
+					</div> 
+					
 				</form:form>
 				<table class="table table-hover">
 					
@@ -70,7 +77,7 @@
 						</c:forEach>
 						
 						<tr>
-							<td colspan="3" form-id="user" class="paginationPanel">${paginationBean.fullDisplay}</td>
+							<td colspan="3" form-id="diet" class="paginationPanel">${paginationBean.fullDisplay}</td>
 						</tr>
 						
 					</tbody>
