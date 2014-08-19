@@ -82,9 +82,15 @@
 		</attribute>
 		<attribute>
 			<name>selectValue</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>selectIndex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
 			<name>defaultValue</name>

@@ -35,7 +35,7 @@ public class  DietRecord implements Serializable {
 	private String type;
 	
 	@Column ( name = "TIME_START" )
-	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeExact" )
+	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsTime" )
 	private LocalTime timeStart;
 	
 	@Column ( name = "TIME_END" )

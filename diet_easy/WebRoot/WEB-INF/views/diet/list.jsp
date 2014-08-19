@@ -64,7 +64,11 @@
 											<table>
 												<c:forEach items="${dietRecordSubList }" var="dietRecord">
 													<tr>
-														<td><joda:format value="${dietRecord.timeStart }" pattern="HH:mm"/></td>
+														<td>
+															<joda:format value="${dietRecord.timeStart }" pattern="HH:mm"/>
+															-
+															<joda:format value="${dietRecord.timeEnd }" pattern="HH:mm"/>
+														</td>
 														<td>${mdata:get("PARAMETER_MAP")[dietRecord.type][dietRecord.subType]}</td>
 														<td>${dietRecord.desc }</td>
 													</tr>

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,6 +24,7 @@ import woo.diet.dao.DietRecordDAO;
 import woo.diet.model.entity.DietMaster;
 import woo.diet.model.entity.DietRecord;
 import woo.diet.model.request.DietReq;
+import woo.diet.model.request.NewDietReq;
 
 @Service("dietMasterService")
 @Transactional
@@ -56,14 +58,46 @@ public class DietMasterService {
 		
 		request.setAttribute("paginationBean", paginationBean);
 	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public DietMaster get(LocalDate day) {
-		return dietMasterDAO.get(day);
-	}
+	
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	public List<DietMaster> getAll() {
-		return dietMasterDAO.getAll();
+	public void save(HttpServletRequest request, NewDietReq newDietReq) {
+		String userId = (String) request.getSession().getAttribute(AppConstant.USER_ID);
+		
+		DietMaster dietMaster = new DietMaster();
+		
+		dietMaster.setUserId(userId);
+		dietMaster.setDay(newDietReq.getDay());
+		dietMaster.setWeather(newDietReq.getWeather());
+		dietMaster.setTemperature(newDietReq.getTemperature());
+		dietMaster.setYear(newDietReq.getDay().getYear());
+		dietMaster.setMonth(newDietReq.getDay().getMonthOfYear());
+		dietMasterDAO.save(dietMaster);
+		
+		
+		for(NewDietReq.Record record : newDietReq.getItems()){
+			DietRecord dietRecord = new DietRecord();
+			
+			dietRecord.setDay(newDietReq.getDay());
+			dietRecord.setType(record.getType());
+			dietRecord.setSubType(record.getSubType());
+			dietRecord.setTimeStart(record.getTimeStart());
+			dietRecord.setTimeEnd(record.getTimeEnd());
+			dietRecord.setDesc(record.getDesc());
+			dietRecord.setTxnDate(DateTime.now());
+			
+			dietRecordDAO.save(dietRecord);
+		}
 	}
+	
+	
+//	@Transactional(propagation = Propagation.REQUIRED)
+//	public DietMaster get(LocalDate day) {
+//		return dietMasterDAO.get(day);
+//	}
+//	
+//	@Transactional(propagation = Propagation.REQUIRED)
+//	public List<DietMaster> getAll() {
+//		return dietMasterDAO.getAll();
+//	}
 }
