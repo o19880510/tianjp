@@ -10,10 +10,12 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class NewDietReq {
 	
+	private Integer			id;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate			day;
-	private String				weather;
-	private String				temperature;
+	private LocalDate		day;
+	private String			city;
+	private String			weather;
+	private String			temperature;
 	private List<Record>	items;
 	
 	public NewDietReq(){
@@ -21,14 +23,15 @@ public class NewDietReq {
 	}
 	
 	public static class Record{
-		private String type;
-		private String subType;
+		private Integer		id;
+		private String		type;
+		private String		subType;
 		@DateTimeFormat(pattern = "HH:mm")
 		private LocalTime	timeStart;
 		@DateTimeFormat(pattern = "HH:mm")
-		private LocalTime timeEnd;
-		
-		private String desc;
+		private LocalTime	timeEnd;
+
+		private String		desc;
 
 		public String getType() {
 			return type;
@@ -69,12 +72,21 @@ public class NewDietReq {
 		public void setDesc(String desc) {
 			this.desc = desc;
 		}
+		
+		public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
 
 		@Override
 		public String toString() {
-			return "Record [type=" + type + ", subType=" + subType + ", timeStart=" + timeStart + ", timeEnd="
-					+ timeEnd + ", desc=" + desc + "]";
+			return "Record [id=" + id + ", type=" + type + ", subType=" + subType + ", timeStart=" + timeStart
+					+ ", timeEnd=" + timeEnd + ", desc=" + desc + "]";
 		}
+		
 	}
 
 
@@ -107,21 +119,35 @@ public class NewDietReq {
 		this.temperature = temperature;
 	}
 
-
 	public List<Record> getItems() {
 		return items;
 	}
-
 
 	public void setItems(List<Record> items) {
 		this.items = items;
 	}
 
+	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
-		return "NewDietReq [day=" + day + ", weather=" + weather + ", temperature=" + temperature + ", items=" + items
-				+ "]";
+		return "NewDietReq [id=" + id + ", day=" + day + ", city=" + city + ", weather=" + weather + ", temperature="
+				+ temperature + ", items=" + items + "]";
 	}
 	
 }

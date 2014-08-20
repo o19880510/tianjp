@@ -3,12 +3,14 @@ package woo.diet.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lutongnet.system.annotation.MarkRequest;
 import com.lutongnet.system.util.HttpUtils;
@@ -56,4 +58,30 @@ public class DietController {
 		
 		return "redirect:" + HttpUtils.getMarkRequestInfo(request);
 	}
+	
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public String remove(HttpServletRequest request, @RequestParam("id") Integer id){
+		
+		dietMasterService.remove(id);
+		
+		return "redirect:" + HttpUtils.getMarkRequestInfo(request);
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public String modifyBefore(HttpServletRequest request, @RequestParam("id") Integer id){
+		
+		dietMasterService.modifyBefore(request, id);
+		
+		return PageConstants.Diet.MODIFY;
+	}
+	
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyBefore(HttpServletRequest request, @ModelAttribute("newDietReq") NewDietReq newDietReq){
+		
+		dietMasterService.modify(request, newDietReq);
+		
+		return "redirect:" + HttpUtils.getMarkRequestInfo(request);
+	}
+	
 }

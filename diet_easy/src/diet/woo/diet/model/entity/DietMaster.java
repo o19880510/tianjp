@@ -4,14 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,8 +20,12 @@ import org.joda.time.LocalDate;
 public class DietMaster implements Serializable {
 
 	private static final long	serialVersionUID	= 1L;
-
+	
 	@Id
+	@GeneratedValue ( strategy = GenerationType.IDENTITY )
+	@Column ( name = "ID" )
+	private Integer id;
+	
 	@Column(name = "`DAY`")
 	@Type(type = "org.joda.time.contrib.hibernate.PersistentLocalDate")
 	private LocalDate			day;
@@ -38,16 +39,14 @@ public class DietMaster implements Serializable {
 	@Column(name = "USER_ID")
 	private String				userId;
 	
+	@Column(name = "CITY")
+	private String				city;
+	
 	@Column(name = "WEATHER")
 	private String				weather;
 	
 	@Column(name = "TEMPERATURE")
 	private String				temperature;
-	
-//	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//	@JoinColumn ( name = "day" )
-//	@OrderBy("day type asc")
-//	private List<DietRecord>	dietRecordList;
 	
 	@Transient
 	private List<List<DietRecord>>	dietRecordList;
@@ -96,7 +95,13 @@ public class DietMaster implements Serializable {
 		this.dietRecordList = dietRecordList;
 	}
 	
-	
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	public String getWeather() {
 		return weather;
@@ -114,11 +119,19 @@ public class DietMaster implements Serializable {
 		this.temperature = temperature;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((day == null) ? 0 : day.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -131,18 +144,19 @@ public class DietMaster implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DietMaster other = (DietMaster) obj;
-		if (day == null) {
-			if (other.day != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!day.equals(other.day))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "DietMaster [day=" + day + ", month=" + month + ", year=" + year + ", userId=" + userId + ", weather="
-				+ weather + ", temperature=" + temperature + ", dietRecordList=" + dietRecordList + "]";
+		return "DietMaster [id=" + id + ", day=" + day + ", month=" + month + ", year=" + year + ", userId=" + userId
+				+ ", city=" + city + ", weather=" + weather + ", temperature=" + temperature + ", dietRecordList="
+				+ dietRecordList + "]";
 	}
 	
 }

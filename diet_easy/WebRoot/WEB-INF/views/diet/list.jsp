@@ -21,10 +21,18 @@
 				<form:form id="diet" action="list.do" method="post" modelAttribute="dietReq" cssClass="form-inline">
 					<%-- --%>
 					<label>类型
-					<form:input path="type"/>
+						<select style="width: 80px;" class="main" name="type" onchange="mainSelect(this)">
+							<option>所有</option>
+							<codetable:option table="<%=ParamConstants.BEHAVIOR_TYPE %>"/>
+						</select>
 					</label>
 					<label>子类型
-					<form:input path="subType"/>
+						<select style="width: 80px;" class="main" name="subType" id="subType">
+							<option>所有</option>
+							<c:forEach end="0" var="type" items="${mdata:get('PARAMETER_MAP')['BEHAVIOR_TYPE'] }">
+								<codetable:option table="${type.key }"/>
+							</c:forEach>
+						</select>
 					</label>
 					
 					<label for="from">日期
@@ -48,14 +56,15 @@
 						<tr>
 							<th style="width: 10%">日期</th>
 							<th style="width: 10%">天气</th>
-							<th style="width: 80%">详情</th>
+							<th style="width: 70%">详情</th>
+							<th style="width: 10%">操作</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${paginationBean.dataList }" var="dietMaster">
 							<tr>
 								<td>${dietMaster.day}</td>
-								<td>${dietMaster.weather}<br>${dietMaster.temperature}℃</td>
+								<td>${dietMaster.city}<br>${dietMaster.weather}<br>${dietMaster.temperature}℃</td>
 								<td>
 									<c:forEach items="${dietMaster.dietRecordList }" var="dietRecordSubList" varStatus="status">
 										
@@ -77,11 +86,15 @@
 										</div>
 									</c:forEach>
 								</td>
+								<td>
+									<a href="modify.do?id=${dietMaster.id}" class="btn">修改</a>
+									<a href="javascript:remove('${dietMaster.id}');" class="btn btn-danger">删除</a>
+								</td>
 							</tr>
 						</c:forEach>
 						
 						<tr>
-							<td colspan="3" form-id="diet" class="paginationPanel">${paginationBean.fullDisplay}</td>
+							<td colspan="4" form-id="diet" class="paginationPanel">${paginationBean.fullDisplay}</td>
 						</tr>
 						
 					</tbody>
@@ -91,8 +104,65 @@
 	</div>
 </div>
 
+<div id="modal" class="modal hide fade">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	  <h3>删除数据</h3>
+ 	</div>
+	<div class="modal-body">
+	  <p>真的要删除该数据吗？</p>
+	</div>
+    <div class="modal-footer">
+      <a href="#" class="btn btn-primary" data-dismiss="modal">否</a>
+      <a class="btn" href="javascript: remove()">是</a>
+    </div>
+</div>
 
 <script type="text/javascript">
+	var Model = {
+			Types:{
+				BEHAVIOR_TYPE:<codetable:json table="<%=ParamConstants.BEHAVIOR_TYPE %>" type='Object'/>
+			},
+			options: function(type){
+				var subType = this.Types[type];
+				if(!subType){
+					return "";
+				}
+				
+				var options = "";
+				for(var i =0 ; i < subType.length; i++){
+					options += "<option value='"+subType[i].key+"'>"+subType[i].value+"</option>"
+				}
+				
+				return options;
+			}
+	};
+	
+	(function ModelTypeInit(){
+		 <c:forEach items="${mdata:get('PARAMETER_MAP')['BEHAVIOR_TYPE'] }" var="behaviorType">
+			var ${behaviorType.key } = <codetable:json table="${behaviorType.key }" type='Object' none="null"/> ;
+			var subTypeKey = ${behaviorType.key } ;
+			if(subTypeKey !== null && subTypeKey !== '' && subTypeKey !== undefined && subTypeKey !== "undefined"){
+				Model.Types['${behaviorType.key }'] = ${behaviorType.key };
+			}
+		</c:forEach>
+	})();
+	
+	function mainSelect(mainSelect){
+		$("#subType").html("<option>所有</option>"+Model.options(mainSelect.value));
+	}
+</script>
+<script type="text/javascript">
+function remove(id){
+	
+	if(id){
+		$('#modal').modal();
+		$('#modal').data('id', id);
+	}else{
+		$('#modal').modal('hide');
+		location.href = 'remove.do?id='+$('#modal').data('id');
+	}
+}
 </script>
 </body>
 </html>

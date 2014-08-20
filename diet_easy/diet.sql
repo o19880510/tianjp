@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50538
 File Encoding         : 65001
 
-Date: 2014-08-14 17:08:48
+Date: 2014-08-20 17:34:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,19 +20,22 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `d_diet_master`;
 CREATE TABLE `d_diet_master` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `DAY` date NOT NULL,
   `MONTH` int(2) DEFAULT NULL,
   `YEAR` int(4) DEFAULT NULL,
   `USER_ID` varchar(20) DEFAULT NULL,
+  `CITY` varchar(20) DEFAULT NULL,
   `WEATHER` varchar(20) DEFAULT NULL,
   `TEMPERATURE` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`DAY`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_diet_master
 -- ----------------------------
-INSERT INTO `d_diet_master` VALUES ('2014-08-13', '8', '2014', 'admin', '阴雨', '27-30');
+INSERT INTO `d_diet_master` VALUES ('1', '2014-08-13', '8', '2014', 'admin', null, '阴雨', '27-30');
+INSERT INTO `d_diet_master` VALUES ('3', '2014-08-20', '8', '2014', 'admin', '深圳', '中雨转阵雨', '24-29');
 
 -- ----------------------------
 -- Table structure for d_diet_record
@@ -40,6 +43,7 @@ INSERT INTO `d_diet_master` VALUES ('2014-08-13', '8', '2014', 'admin', '阴雨'
 DROP TABLE IF EXISTS `d_diet_record`;
 CREATE TABLE `d_diet_record` (
   `ID` int(11) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `MASTER_ID` int(11) DEFAULT NULL,
   `DAY` date NOT NULL,
   `TYPE` varchar(10) DEFAULT NULL,
   `TIME_START` time DEFAULT NULL,
@@ -48,28 +52,16 @@ CREATE TABLE `d_diet_record` (
   `DESC` varchar(300) DEFAULT NULL,
   `TXN_DATE` datetime DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of d_diet_record
 -- ----------------------------
-INSERT INTO `d_diet_record` VALUES ('00000000023', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'BREAKFAST', 'test desc0', '2014-08-13 17:05:54');
-INSERT INTO `d_diet_record` VALUES ('00000000024', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'LUNCH', 'test desc1', '2014-08-13 17:05:54');
-INSERT INTO `d_diet_record` VALUES ('00000000025', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'DINNER', 'test desc2', '2014-08-13 17:05:54');
-
--- ----------------------------
--- Table structure for d_user
--- ----------------------------
-DROP TABLE IF EXISTS `d_user`;
-CREATE TABLE `d_user` (
-  `ID` varchar(20) DEFAULT NULL,
-  `USER_NAME` varchar(30) DEFAULT NULL,
-  `PASSWORD` varchar(40) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of d_user
--- ----------------------------
+INSERT INTO `d_diet_record` VALUES ('00000000023', '1', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'BREAKFAST', 'test desc0', '2014-08-13 17:05:54');
+INSERT INTO `d_diet_record` VALUES ('00000000024', '1', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'LUNCH', 'test desc1', '2014-08-13 17:05:54');
+INSERT INTO `d_diet_record` VALUES ('00000000025', '1', '2014-08-13', 'FOOD_TYPE', '01:05:54', '01:05:54', 'DINNER', 'test desc2', '2014-08-13 17:05:54');
+INSERT INTO `d_diet_record` VALUES ('00000000039', '3', '2014-08-20', 'FOOD_TYPE', '16:45:00', '17:10:00', 'BREAKFAST', '紫薯粥 煎饼 千层饼 酥饼', '2014-08-20 16:39:29');
+INSERT INTO `d_diet_record` VALUES ('00000000040', '3', '2014-08-20', 'FOOD_TYPE', '20:10:00', '20:20:00', 'LUNCH', '米饭 大白菜 鸡蛋羹 胡萝卜汤', '2014-08-20 16:39:29');
 
 -- ----------------------------
 -- Table structure for t_action_log
@@ -85,7 +77,7 @@ CREATE TABLE `t_action_log` (
   `uri` varchar(256) DEFAULT NULL,
   `param` varchar(4000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of t_action_log
@@ -157,6 +149,53 @@ INSERT INTO `t_action_log` VALUES ('64', 'success', '查询角色', '2014-08-14 
 INSERT INTO `t_action_log` VALUES ('65', 'success', '查询参数', '2014-08-14 16:07:16', null, 'admin', '/de/system/param/list.do', 'mid1:101<br/>mid2:205<br/>');
 INSERT INTO `t_action_log` VALUES ('66', 'success', '登录系统', '2014-08-14 16:17:16', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
 INSERT INTO `t_action_log` VALUES ('67', 'success', '登录系统', '2014-08-14 16:58:04', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('68', 'success', '登录系统', '2014-08-15 10:29:48', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('69', 'success', '登录系统', '2014-08-15 10:43:44', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('70', 'success', '登录系统', '2014-08-15 11:40:20', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('71', 'success', '登录系统', '2014-08-15 14:58:00', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('72', 'success', '登录系统', '2014-08-15 15:30:42', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('73', 'success', '登录系统', '2014-08-15 16:00:39', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('74', 'success', '登录系统', '2014-08-19 11:02:03', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('75', 'success', '登录系统', '2014-08-19 11:05:41', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('76', 'success', '登录系统', '2014-08-19 12:48:40', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('77', 'success', '登录系统', '2014-08-19 14:24:52', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('78', 'success', '登录系统', '2014-08-19 16:03:00', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('79', 'success', '登录系统', '2014-08-19 16:07:54', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('80', 'success', '登录系统', '2014-08-19 16:34:32', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('81', 'success', '登录系统', '2014-08-19 16:36:20', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('82', 'success', '登录系统', '2014-08-19 16:39:47', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('83', 'success', '查询用户', '2014-08-19 16:43:59', null, 'admin', '/de/system/user/list.do', 'mid1:101<br/>mid2:201<br/>');
+INSERT INTO `t_action_log` VALUES ('84', 'success', '登录系统', '2014-08-19 16:54:44', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('85', 'success', '登录系统', '2014-08-19 16:58:17', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('86', 'success', '登录系统', '2014-08-19 16:59:43', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('87', 'success', '登录系统', '2014-08-19 17:01:08', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('88', 'success', '登录系统', '2014-08-19 17:02:57', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('89', 'success', '登录系统', '2014-08-19 17:04:30', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('90', 'success', '登录系统', '2014-08-19 17:13:12', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('91', 'success', '查询参数', '2014-08-19 17:32:26', null, 'admin', '/de/system/param/list.do', 'mid1:101<br/>mid2:205<br/>');
+INSERT INTO `t_action_log` VALUES ('92', 'success', '新增参数', '2014-08-19 17:32:59', null, 'admin', '/de/system/param/add.do', 'name:CITY<br/>description:城市<br/>items[0].name:shenzhen<br/>items[0].value:深圳<br/>');
+INSERT INTO `t_action_log` VALUES ('93', 'success', '查询参数', '2014-08-19 17:33:00', null, 'admin', '/de/system/param/list.do', 'mid1:101<br/>mid2:205<br/>');
+INSERT INTO `t_action_log` VALUES ('94', 'success', '登录系统', '2014-08-19 17:34:40', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('95', 'success', '登录系统', '2014-08-20 09:43:02', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('96', 'success', '登录系统', '2014-08-20 14:41:05', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('97', 'success', '查询用户', '2014-08-20 14:47:53', null, 'admin', '/de/system/user/list.do', 'mid1:101<br/>mid2:201<br/>');
+INSERT INTO `t_action_log` VALUES ('98', 'success', '查询角色', '2014-08-20 14:47:54', null, 'admin', '/de/system/role/list.do', 'mid1:101<br/>mid2:202<br/>');
+INSERT INTO `t_action_log` VALUES ('99', 'success', '查询角色', '2014-08-20 14:48:35', null, 'admin', '/de/system/role/list.do', 'mid1:101<br/>mid2:202<br/>');
+INSERT INTO `t_action_log` VALUES ('100', 'success', '查询参数', '2014-08-20 14:48:55', null, 'admin', '/de/system/param/list.do', 'mid1:101<br/>mid2:205<br/>');
+INSERT INTO `t_action_log` VALUES ('101', 'success', '修改参数', '2014-08-20 14:49:01', null, 'admin', '/de/system/param/update.do', 'name:CITY<br/>description:城市<br/>items[0].name:深圳<br/>items[0].value:深圳<br/>id:5<br/>');
+INSERT INTO `t_action_log` VALUES ('102', 'success', '查询参数', '2014-08-20 14:49:01', null, 'admin', '/de/system/param/list.do', 'mid1:101<br/>mid2:205<br/>');
+INSERT INTO `t_action_log` VALUES ('103', 'success', '登录系统', '2014-08-20 14:53:25', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('104', 'success', '登录系统', '2014-08-20 14:54:28', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('105', 'success', '登录系统', '2014-08-20 15:01:11', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('106', 'success', '登录系统', '2014-08-20 15:02:15', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('107', 'success', '登录系统', '2014-08-20 15:38:19', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('108', 'success', '登录系统', '2014-08-20 16:36:18', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('109', 'success', '登录系统', '2014-08-20 16:38:31', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('110', 'success', '登录系统', '2014-08-20 16:41:03', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('111', 'success', '登录系统', '2014-08-20 16:51:17', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('112', 'success', '登录系统', '2014-08-20 17:05:26', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('113', 'success', '登录系统', '2014-08-20 17:32:43', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
+INSERT INTO `t_action_log` VALUES ('114', 'success', '登录系统', '2014-08-20 17:33:51', null, 'admin', 'system/login', 'userid:admin<br/>password:***');
 
 -- ----------------------------
 -- Table structure for t_action_log_detail
@@ -212,7 +251,7 @@ CREATE TABLE `t_param` (
   `description` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_name` (`name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of t_param
@@ -221,6 +260,7 @@ INSERT INTO `t_param` VALUES ('1', 'log_level', '日志信息类型');
 INSERT INTO `t_param` VALUES ('2', 'user_status', '用户状态');
 INSERT INTO `t_param` VALUES ('3', 'BEHAVIOR_TYPE', '行为类型');
 INSERT INTO `t_param` VALUES ('4', 'FOOD_TYPE', '饮食类型');
+INSERT INTO `t_param` VALUES ('5', 'CITY', '城市');
 
 -- ----------------------------
 -- Table structure for t_param_item
@@ -232,7 +272,7 @@ CREATE TABLE `t_param_item` (
   `value` varchar(200) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of t_param_item
@@ -251,6 +291,7 @@ INSERT INTO `t_param_item` VALUES ('4', 'LUNCH', '午餐', '11');
 INSERT INTO `t_param_item` VALUES ('4', 'DINNER', '晚餐', '12');
 INSERT INTO `t_param_item` VALUES ('4', 'EXTRA_MEAL', '加餐', '13');
 INSERT INTO `t_param_item` VALUES ('4', 'NIGHT', '宵夜', '14');
+INSERT INTO `t_param_item` VALUES ('5', '深圳', '深圳', '16');
 
 -- ----------------------------
 -- Table structure for t_privilege
@@ -382,7 +423,7 @@ CREATE TABLE `t_seq` (
 -- ----------------------------
 -- Records of t_seq
 -- ----------------------------
-INSERT INTO `t_seq` VALUES ('T_USER_ACTION_LOG', 'UAL', '9999999', '0', '198', '1');
+INSERT INTO `t_seq` VALUES ('T_USER_ACTION_LOG', 'UAL', '9999999', '0', '302', '1');
 
 -- ----------------------------
 -- Table structure for t_system_paramter
@@ -421,7 +462,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '系统管理员', '', '', '2014-04-13 17:07:16', '2014-08-14 16:58:04', 'online');
+INSERT INTO `t_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', '系统管理员', '', '', '2014-04-13 17:07:16', '2014-08-20 17:33:51', 'online');
 
 -- ----------------------------
 -- Table structure for t_user_action_log
@@ -573,6 +614,110 @@ INSERT INTO `t_user_action_log` VALUES ('UAL201408140000194', 'admin', 'SL01S01'
 INSERT INTO `t_user_action_log` VALUES ('UAL201408140000195', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '511', 's_col_1=userid;', '2014-08-14 16:17:16');
 INSERT INTO `t_user_action_log` VALUES ('UAL201408140000196', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '44', '', '2014-08-14 16:58:00');
 INSERT INTO `t_user_action_log` VALUES ('UAL201408140000197', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '236', 's_col_1=userid;', '2014-08-14 16:58:04');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000198', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '178', '', '2014-08-15 10:29:45');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000199', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '485', 's_col_1=userid;', '2014-08-15 10:29:48');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000200', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '211', '', '2014-08-15 10:43:40');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000201', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '307', 's_col_1=userid;', '2014-08-15 10:43:44');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000202', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '960', '', '2014-08-15 11:40:14');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000203', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '518', 's_col_1=userid;', '2014-08-15 11:40:19');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000204', null, 'SL03S01', '管理员登出', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '51', '', '2014-08-15 14:57:56');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000205', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '48', '', '2014-08-15 14:57:56');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000206', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '195', 's_col_1=userid;', '2014-08-15 14:58:00');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000207', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '759', '', '2014-08-15 15:30:33');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000208', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '76', '', '2014-08-15 15:30:38');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000209', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '307', 's_col_1=userid;', '2014-08-15 15:30:41');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000210', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '149', '', '2014-08-15 15:34:17');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000211', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '53', '', '2014-08-15 15:37:53');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000212', 'admin', 'CD01S02', '缓存数据详情', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '115', 's_col_1=dataName;', '2014-08-15 15:37:56');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000213', 'admin', 'CD01S02', '缓存数据详情', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '199', 's_col_1=dataName;', '2014-08-15 15:38:18');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000214', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '832', '', '2014-08-15 16:00:34');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408150000215', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '419', 's_col_1=userid;', '2014-08-15 16:00:38');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000216', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '231', '', '2014-08-19 11:01:58');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000217', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '295', 's_col_1=userid;', '2014-08-19 11:02:03');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000218', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '810', '', '2014-08-19 11:02:05');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000219', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '181', '', '2014-08-19 11:05:36');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000220', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '289', 's_col_1=userid;', '2014-08-19 11:05:40');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000221', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '214', '', '2014-08-19 12:48:36');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000222', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '389', 's_col_1=userid;', '2014-08-19 12:48:40');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000223', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '49', '', '2014-08-19 14:24:49');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000224', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '199', 's_col_1=userid;', '2014-08-19 14:24:52');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000225', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '1051', '', '2014-08-19 16:02:55');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000226', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '312', 's_col_1=userid;', '2014-08-19 16:03:00');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000227', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '169', '', '2014-08-19 16:07:51');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000228', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '288', 's_col_1=userid;', '2014-08-19 16:07:54');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000229', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '161', '', '2014-08-19 16:34:29');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000230', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '298', 's_col_1=userid;', '2014-08-19 16:34:32');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000231', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '161', '', '2014-08-19 16:36:16');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000232', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '296', 's_col_1=userid;', '2014-08-19 16:36:20');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000233', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '172', '', '2014-08-19 16:39:15');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000234', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '285', 's_col_1=userid;', '2014-08-19 16:39:47');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000235', 'admin', 'SU01S01', '查询用户列表', null, null, null, null, null, null, null, null, null, null, 'name=null;status=null;userid=null;', '200', null, null, null, null, null, null, '441', '', '2014-08-19 16:43:58');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000236', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '199', '', '2014-08-19 16:54:39');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000237', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '281', 's_col_1=userid;', '2014-08-19 16:54:43');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000238', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '176', '', '2014-08-19 16:58:13');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000239', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '581', 's_col_1=userid;', '2014-08-19 16:58:17');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000240', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '161', '', '2014-08-19 16:59:38');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000241', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '465', 's_col_1=userid;', '2014-08-19 16:59:43');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000242', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '172', '', '2014-08-19 17:01:02');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000243', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '290', 's_col_1=userid;', '2014-08-19 17:01:08');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000244', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '168', '', '2014-08-19 17:02:50');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000245', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '516', 's_col_1=userid;', '2014-08-19 17:02:57');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000246', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '175', '', '2014-08-19 17:04:27');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000247', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '426', 's_col_1=userid;', '2014-08-19 17:04:30');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000248', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '166', '', '2014-08-19 17:13:07');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000249', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '370', 's_col_1=userid;', '2014-08-19 17:13:12');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000250', 'admin', 'SP01S01', '查询参数', null, null, null, null, null, null, null, null, null, null, 'name=null;description=null;', '200', null, null, null, null, null, null, '245', '', '2014-08-19 17:32:26');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000251', 'admin', 'SP01S02', '新增参数', null, null, null, null, null, null, null, null, null, null, 'name=CITY;description=城市;', '200', null, null, null, null, null, null, '240', '', '2014-08-19 17:32:59');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000252', 'admin', 'SP01S01', '查询参数', null, null, null, null, null, null, null, null, null, null, 'name=null;description=null;', '200', null, null, null, null, null, null, '122', '', '2014-08-19 17:33:00');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000253', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '110', '', '2014-08-19 17:33:04');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000254', 'admin', 'CD01S03', '缓存数据重加载', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '155', 's_col_1=dataName;', '2014-08-19 17:33:08');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000255', 'admin', 'CD01S03', '缓存数据重加载', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '101', 's_col_1=dataName;', '2014-08-19 17:33:11');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000256', 'admin', 'CD01S03', '缓存数据重加载', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '69', 's_col_1=dataName;', '2014-08-19 17:34:36');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000257', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '153', '', '2014-08-19 17:34:37');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408190000258', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '394', 's_col_1=userid;', '2014-08-19 17:34:40');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000259', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '190', '', '2014-08-20 09:42:57');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000260', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '390', 's_col_1=userid;', '2014-08-20 09:43:01');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000261', null, 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '52', '', '2014-08-20 14:40:39');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000262', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '104', 's_col_1=userid;', '2014-08-20 14:40:52');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000263', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '83', 's_col_1=userid;', '2014-08-20 14:40:56');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000264', null, 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '254', 's_col_1=userid;', '2014-08-20 14:41:05');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000265', 'admin', 'SU01S01', '查询用户列表', null, null, null, null, null, null, null, null, null, null, 'name=null;status=null;userid=null;', '200', null, null, null, null, null, null, '172', '', '2014-08-20 14:47:53');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000266', 'admin', 'SR01S01', '查询角色', null, null, null, null, null, null, null, null, null, null, 'name=null;', '200', null, null, null, null, null, null, '212', '', '2014-08-20 14:47:54');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000267', 'admin', 'SR01S01', '查询角色', null, null, null, null, null, null, null, null, null, null, 'name=null;', '200', null, null, null, null, null, null, '95', '', '2014-08-20 14:48:34');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000268', 'admin', 'SP01S01', '查询参数', null, null, null, null, null, null, null, null, null, null, 'name=null;description=null;', '200', null, null, null, null, null, null, '166', '', '2014-08-20 14:48:55');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000269', 'admin', 'SP01S03', '修改参数', null, null, null, null, null, null, null, null, null, null, 'id=5;name=CITY;description=城市;', '200', null, null, null, null, null, null, '289', '', '2014-08-20 14:49:01');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000270', 'admin', 'SP01S01', '查询参数', null, null, null, null, null, null, null, null, null, null, 'name=null;description=null;', '200', null, null, null, null, null, null, '109', '', '2014-08-20 14:49:01');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000271', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '87', '', '2014-08-20 14:49:03');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000272', 'admin', 'CD01S03', '缓存数据重加载', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '83', 's_col_1=dataName;', '2014-08-20 14:49:06');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000273', 'admin', 'CD01S03', '缓存数据重加载', 'PARAMETER_MAP', null, null, null, null, null, null, null, null, null, 'dataName=PARAMETER_MAP;', '200', null, null, null, null, null, null, '100', 's_col_1=dataName;', '2014-08-20 14:49:10');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000274', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '165', '', '2014-08-20 14:53:04');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000275', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '57', '', '2014-08-20 14:53:15');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000276', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '203', '', '2014-08-20 14:53:21');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000277', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '426', 's_col_1=userid;', '2014-08-20 14:53:25');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000278', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '303', '', '2014-08-20 14:54:23');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000279', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '327', 's_col_1=userid;', '2014-08-20 14:54:28');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000280', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '167', '', '2014-08-20 15:01:06');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000281', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '511', 's_col_1=userid;', '2014-08-20 15:01:11');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000282', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '167', '', '2014-08-20 15:02:12');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000283', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '362', 's_col_1=userid;', '2014-08-20 15:02:15');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000284', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '170', '', '2014-08-20 15:38:15');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000285', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '334', 's_col_1=userid;', '2014-08-20 15:38:19');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000286', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '72', '', '2014-08-20 15:41:31');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000287', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '327', '', '2014-08-20 16:36:14');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000288', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '282', 's_col_1=userid;', '2014-08-20 16:36:18');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000289', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '193', '', '2014-08-20 16:38:27');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000290', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '566', 's_col_1=userid;', '2014-08-20 16:38:31');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000291', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '164', '', '2014-08-20 16:41:00');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000292', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '306', 's_col_1=userid;', '2014-08-20 16:41:03');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000293', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '164', '', '2014-08-20 16:51:14');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000294', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '333', 's_col_1=userid;', '2014-08-20 16:51:17');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000295', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '205', '', '2014-08-20 17:05:23');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000296', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '292', 's_col_1=userid;', '2014-08-20 17:05:26');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000297', 'admin', 'CD01S01', '缓存数据列表', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '71', '', '2014-08-20 17:13:34');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000298', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '166', '', '2014-08-20 17:32:40');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000299', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '314', 's_col_1=userid;', '2014-08-20 17:32:43');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000300', 'admin', 'SL01S01', '管理员登录界面', null, null, null, null, null, null, null, null, null, null, '', '200', null, null, null, null, null, null, '386', '', '2014-08-20 17:33:48');
+INSERT INTO `t_user_action_log` VALUES ('UAL201408200000301', 'admin', 'SL02S01', '管理员登录', 'admin', null, null, null, null, null, null, null, null, null, 'userid=admin;', '200', null, null, null, null, null, null, '473', 's_col_1=userid;', '2014-08-20 17:33:51');
 
 -- ----------------------------
 -- Table structure for t_user_copy
