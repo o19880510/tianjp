@@ -1,5 +1,10 @@
 package woo.diet.dao;
 
+import java.util.ArrayList;
+
+import java.util.List;
+
+import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import woo.diet.model.entity.DietMaster;
@@ -15,9 +20,26 @@ public class DietMasterDAO extends EntityDaoSupport<DietMaster> {
 		assert userId != null;
 		assert dietReq != null;
 		
-		String hql = "where userId = ? order by day desc";
+		LocalDate startDate = dietReq.getStartDate();
+		LocalDate endDate = dietReq.getEndDate();
 		
-		return super.findByPaging(hql, new Object[]{userId}, dietReq.getCurrent(), dietReq.getPageSize());
+		String hql = "where userId = ? ";
+		List<Object> param =new ArrayList<Object>();
+		param.add(userId);
+		
+ 		if(startDate != null){
+			hql += "and day >= ? ";
+			param.add(startDate);
+		}
+		
+ 		if(endDate != null){
+			hql += "and day <= ? ";
+			param.add(endDate);
+		}
+ 		
+ 		hql += "order by day desc";
+		
+		return super.findByPaging(hql, param, dietReq.getCurrent(), dietReq.getPageSize());
 	}
 	
 }

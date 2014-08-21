@@ -26,6 +26,8 @@ public class  DietRecord implements Serializable {
 	@Column ( name = "ID" )
 	private Integer id;
 	
+	@Column ( name = "MASTER_ID" )
+	private Integer masterId;
 	
 	@Column ( name = "`DAY`" )
 	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalDate" )
@@ -35,11 +37,13 @@ public class  DietRecord implements Serializable {
 	private String type;
 	
 	@Column ( name = "TIME_START" )
-	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeExact" )
+//	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsTime" )
+	@Type ( type = "woo.diet.enhance.PersistentLocalTimeAsTimeEnhanceTimeZone" )
 	private LocalTime timeStart;
 	
 	@Column ( name = "TIME_END" )
-	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsTime" )
+//	@Type ( type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsTime" )
+	@Type ( type = "woo.diet.enhance.PersistentLocalTimeAsTimeEnhanceTimeZone" )
 	private LocalTime timeEnd;
 	
 	
@@ -52,6 +56,15 @@ public class  DietRecord implements Serializable {
 	@Type ( type = "org.joda.time.contrib.hibernate.PersistentDateTime" )
 	@Column ( name = "TXN_DATE" )
 	private DateTime txnDate;
+
+	public DietRecord(Integer id) {
+		super();
+		this.id = id;
+	}
+
+	public DietRecord() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;
@@ -116,6 +129,14 @@ public class  DietRecord implements Serializable {
 	public void setTxnDate(DateTime txnDate) {
 		this.txnDate = txnDate;
 	}
+	
+	public Integer getMasterId() {
+		return masterId;
+	}
+
+	public void setMasterId(Integer masterId) {
+		this.masterId = masterId;
+	}
 
 	@Override
 	public int hashCode() {
@@ -144,8 +165,9 @@ public class  DietRecord implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DietRecord [id=" + id + ", day=" + day + ", type=" + type + ", timeStart=" + timeStart + ", timeEnd="
-				+ timeEnd + ", subType=" + subType + ", desc=" + desc + ", txnDate=" + txnDate + "]";
+		return "DietRecord [id=" + id + ", masterId=" + masterId + ", day=" + day + ", type=" + type + ", timeStart="
+				+ timeStart + ", timeEnd=" + timeEnd + ", subType=" + subType + ", desc=" + desc + ", txnDate="
+				+ txnDate + "]";
 	}
 	
 }

@@ -26,6 +26,8 @@
 	<script type="text/javascript" src="<w:path/>resources/js/pagination.js"></script>
 	<script type="text/javascript" src="<w:path/>resources/js/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="<w:path/>resources/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<w:path/>resources/js/lutong/javascript-enhance-0.1.js"></script>
+	
 	<!--[if lt IE 9]>
     	<script type="text/javascript" src="<w:path/>resources/js/html5shiv.js"></script>
     <![endif]-->
