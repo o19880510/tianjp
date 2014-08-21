@@ -204,4 +204,27 @@
 	<action url="/system/data/reload_all.do" action-code="CD01S04" desc="缓存数据全部重加载">
 	</action>
 	
+	<!-- 饮食记录管理 -->
+	<action url="/diet/log/list.do" action-code="DE01S01" desc="饮食记录列表">
+		<param name="type" column="s_col_1"/>
+		<param name="subType" column="s_col_2"/>
+		<param name="startDate" column="d_col_1" type="date"/>
+		<param name="endDate" column="d_col_2" type="date"/>
+	</action>
+	
+	<action url="/diet/log/add.do" method="POST" action-code="DE01S02" desc="饮食记录新增">
+		<param name="city" column="s_col_1"/>
+		<param name="day" column="d_col_1" type="date"/>
+	</action>
+	
+	<action url="/diet/log/modify.do" method="POST" action-code="DE01S03" desc="饮食记录修改">
+		<param name="id" column="i_col_1"/>
+		<param name="city" column="s_col_1"/>
+		<param name="day" column="d_col_1" type="date"/>
+	</action>
+	
+	<action url="/diet/log/remove.do" action-code="DE01S04" desc="饮食记录删除">
+		<param name="id" column="i_col_1"/>
+	</action>
+	
 </actons>

@@ -22,15 +22,15 @@
 					<%-- --%>
 					<label>类型
 						<select style="width: 80px;" class="main" name="type" onchange="mainSelect(this)">
-							<option>所有</option>
-							<codetable:option table="<%=ParamConstants.BEHAVIOR_TYPE %>"/>
+							<option value="">所有</option>
+							<codetable:option table="<%=ParamConstants.BEHAVIOR_TYPE %>" selectValue="${dietReq.type }"/>
 						</select>
 					</label>
 					<label>子类型
 						<select style="width: 80px;" class="main" name="subType" id="subType">
-							<option>所有</option>
+							<option value="">所有</option>
 							<c:forEach end="0" var="type" items="${mdata:get('PARAMETER_MAP')['BEHAVIOR_TYPE'] }">
-								<codetable:option table="${type.key }"/>
+								<codetable:option table="${type.key }" selectValue="${dietReq.subType }"/>
 							</c:forEach>
 						</select>
 					</label>
@@ -149,7 +149,7 @@
 	})();
 	
 	function mainSelect(mainSelect){
-		$("#subType").html("<option>所有</option>"+Model.options(mainSelect.value));
+		$("#subType").html("<option value=''>所有</option>"+Model.options(mainSelect.value));
 	}
 </script>
 <script type="text/javascript">

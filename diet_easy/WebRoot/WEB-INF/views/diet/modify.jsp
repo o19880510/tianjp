@@ -66,6 +66,9 @@
 										</td>
 										<td>
 											<select style="width: 130px;">
+												<c:forEach end="0" var="type" items="${mdata:get('PARAMETER_MAP')['BEHAVIOR_TYPE'] }">
+													<codetable:option table="${type.key }"/>
+												</c:forEach>
 											</select>
 										</td>
 										<td>
