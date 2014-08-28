@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="zip" basedir="..">
+
+	<property name="project.version"    value="2.0" />
+	
+	<property name="jar.name"    value="DB4JavaTools-${project.version}.jar" />
+	<property name="zip.name"    value="DB4JavaTools_v${project.version}.zip" />
+	
+	<property name="src.dir"    value="src" />
+	<property name="template.dir"    value="template" />
+
+	<property name="dir.classes"    value="_bin" />
+
+	<!--app用到的lib-->
+	<property name="lib.dir" value="lib"/>
+
+	<path id="project.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="zip">
+		
+		<delete dir="${dir.classes}"/>
+		<mkdir dir="${dir.classes}"/>
+		
+		<javac srcdir="${src.dir}" destdir="${dir.classes}" excludes="generate.properties" debug="on">
+			<compilerarg line="-encoding UTF-8"/>
+			<classpath refid="project.classpath"/>
+		</javac>
+		
+		<jar jarfile="build/${jar.name}">
+			<fileset dir="${dir.classes}"/>
+			<manifest id="MANIFEST.MF">
+			    <attribute name="Main-Class" value="woo.db.gen.Main"/>
+			</manifest>
+		</jar>
+		
+		<delete dir="${dir.classes}"/>
+		<mkdir dir="${dir.classes}"/>
+		
+		<copy todir="${dir.classes}/lib" >
+			<fileset dir="${lib.dir}">
+			</fileset>
+			<fileset file="build/${jar.name}"/>
+		</copy>
+		
+		<copy todir="${dir.classes}/template" >
+			<fileset dir="${template.dir}">
+			</fileset>
+		</copy>
+		
+		<copy todir="${dir.classes}" >
+			<fileset file="build/run.bat"/>
+			<fileset file="build/run.sh"/>
+			<fileset file="docs/Readme.txt"/>
+			<fileset file="${src.dir}/generate.properties"/>
+		</copy>
+		
+		<replace file="${dir.classes}/run.bat">
+			<replacetoken><![CDATA[$lib]]></replacetoken>
+			<replacevalue><![CDATA[lib]]></replacevalue>
+						
+			<replacetoken><![CDATA[$jar]]></replacetoken>
+			<replacevalue><![CDATA[${jar.name}]]></replacevalue>
+		</replace>
+		<!-- file="${dir.classes}/run.bat" -->
+		<replace dir="${dir.classes}" includes="run.*">
+		  <replacefilter  token="@lib@" value="lib"/>
+		  <replacefilter  token="@jar@" value="${jar.name}"/>
+		</replace>
+		
+		<zip zipfile="build/${zip.name}">
+			<fileset dir="${dir.classes}">
+			</fileset>
+		</zip>
+		
+		<delete dir="${dir.classes}"/>
+		
+	</target>
+	
+</project>

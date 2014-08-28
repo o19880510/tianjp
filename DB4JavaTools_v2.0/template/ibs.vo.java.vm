@@ -1,0 +1,48 @@
+#set( $className = ${StringUtil.noUnderLine($__TableValue.name).substring(1)})
+
+package xx.xx.vo;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+
+public class  $className implements Serializable {
+
+ 	private static final long serialVersionUID = 1L;
+
+#foreach($column in ${__TableValue.columnList})
+	#if($column.javaType == "Timestamp")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date ${StringUtil.noUnderLine($column.name.toLowerCase())};
+	#else
+	private $column.javaType ${StringUtil.noUnderLine($column.name.toLowerCase())};
+	#end
+#end
+
+## 生成 getter setter 方法
+#foreach($column in ${__TableValue.columnList})
+	#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+	#set( $columnJavaType = $column.javaType )
+	#if($columnJavaType == "Timestamp")
+		#set( $columnJavaType = "DateTime" )
+	#end
+	public void set${StringUtil.firstCharToUpper($columnName)}($columnJavaType $columnName){
+		this.$columnName = $columnName;
+	}
+	public $columnJavaType get${StringUtil.firstCharToUpper($columnName)}(){
+		return this.$columnName;
+	}
+#end
+
+public String toString(){
+	return "$className [ "
+	#foreach($column in ${__TableValue.columnList})
+		#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+		#if($velocityCount != 1)
+			#set( $symbol = ", " )
+		#end
+		+ "$!symbol$columnName:" + $columnName
+	#end
+		+ " ]";
+}
+}
