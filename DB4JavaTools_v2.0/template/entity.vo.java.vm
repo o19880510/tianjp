@@ -1,0 +1,60 @@
+#set( $className = ${StringUtil.noUnderLine($__TableValue.name).substring(1)})
+
+package xx.xx.vo;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Table ( name = "$__TableValue.name" )
+public class  $className implements Serializable {
+
+ 	private static final long serialVersionUID = 1L;
+
+#foreach($column in ${__TableValue.columnList})
+
+	#if(${column.PID})
+		@Id
+		#if(${column.AI})
+			@GeneratedValue ( strategy = GenerationType.IDENTITY )
+		#end
+	#end
+	@Column ( name = "${column.name}" )
+	#if($column.javaType == "Timestamp")
+	@Type ( type = "org.joda.time.contrib.hibernate.PersistentDateTime" )
+	private DateTime					${StringUtil.noUnderLine($column.name.toLowerCase())};
+	#else
+	private $column.javaType ${StringUtil.noUnderLine($column.name.toLowerCase())};
+	#end
+#end
+
+## 生成 getter setter 方法
+#foreach($column in ${__TableValue.columnList}) 
+	#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+	#set( $columnJavaType = $column.javaType )
+	#if($columnJavaType == "Timestamp")
+		#set( $columnJavaType = "DateTime" )
+	#end
+	public void set${StringUtil.firstCharToUpper($columnName)}($columnJavaType $columnName){
+		this.$columnName = $columnName;
+	}
+	public $columnJavaType get${StringUtil.firstCharToUpper($columnName)}(){
+		return this.$columnName;
+	}
+#end
+
+public String toString(){
+	return "$className [ "
+	#foreach($column in ${__TableValue.columnList}) 
+		#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+		#if($velocityCount != 1)
+			#set( $symbol = ", " )
+		#end
+		+ "$!symbol$columnName:" + $columnName
+	#end
+		+ " ]";
+}
+}

@@ -1,0 +1,39 @@
+#set( $className = ${StringUtil.noUnderLine($__TableValue.name).substring(1)} + "Value")
+ 
+package xx.xx.vo;
+ 
+import java.sql.Timestamp;
+
+public class  $className {
+ 	
+#foreach($column in ${__TableValue.columnList}) 
+	private $column.javaType ${StringUtil.noUnderLine($column.name.toLowerCase())};
+	#if($velocityCount % 5 == 0) ##每五个属性，增加空白行
+	
+	#end
+#end
+
+## 生成 getter setter 方法
+#foreach($column in ${__TableValue.columnList}) 
+	#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+	public void set${StringUtil.firstCharToUpper($columnName)}($column.javaType $columnName){
+		this.$columnName = $columnName;
+	}
+	public $column.javaType get${StringUtil.firstCharToUpper($columnName)}(){
+		return this.$columnName;
+	}
+#end
+
+public String toString(){
+	return "$className [ "
+	#foreach($column in ${__TableValue.columnList}) 
+		#set( $columnName = ${StringUtil.noUnderLine($column.name.toLowerCase())} )
+		#if($velocityCount != 1)
+			#set( $symbol = ", " )
+		#end
+		+ "$!symbol$columnName:" + $columnName
+	#end
+		+ " ]";
+}
+}
+ 

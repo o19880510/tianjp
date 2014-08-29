@@ -1,0 +1,61 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserActionLog">
+
+	<resultMap id="userActionLogResultMap" ype="com.lutongnet.cps.base.model.entity.system.UserActionLogValue">
+		<id column="ID" property="id" />
+		<result column="USER_ID" property="userId" />
+		<result column="ACTION_CODE" property="actionCode" />
+		<result column="OPERATION_DESC" property="operationDesc" />
+		<result column="S_COL_1" property="sCol1" />
+		<result column="S_COL_2" property="sCol2" />
+		<result column="S_COL_3" property="sCol3" />
+		<result column="S_COL_4" property="sCol4" />
+		<result column="I_COL_1" property="iCol1" />
+		<result column="I_COL_2" property="iCol2" />
+		<result column="I_COL_3" property="iCol3" />
+		<result column="D_COL_1" property="dCol1" />
+		<result column="D_COL_2" property="dCol2" />
+		<result column="D_COL_3" property="dCol3" />
+		<result column="INPUT_PARAMS" property="inputParams" />
+		<result column="HTTP_RESP_CODE" property="httpRespCode" />
+		<result column="HTTP_ERROR_MSG" property="httpErrorMsg" />
+		<result column="THIRD_RESP_DATA" property="thirdRespData" />
+		<result column="RESP_DATA" property="respData" />
+		<result column="BUSINESS_RESULT_CODE" property="businessResultCode" />
+		<result column="EXCEPTION_INFO" property="exceptionInfo" />
+		<result column="STAYING_TIME" property="stayingTime" />
+		<result column="USING_TIME" property="usingTime" />
+		<result column="COMMENT" property="comment" />
+		<result column="TXN_DATE" property="txnDate" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, USER_ID, ACTION_CODE, OPERATION_DESC, S_COL_1,
+		S_COL_2, S_COL_3, S_COL_4, I_COL_1, I_COL_2,
+		I_COL_3, D_COL_1, D_COL_2, D_COL_3, INPUT_PARAMS,
+		HTTP_RESP_CODE, HTTP_ERROR_MSG, THIRD_RESP_DATA, RESP_DATA, BUSINESS_RESULT_CODE,
+		EXCEPTION_INFO, STAYING_TIME, USING_TIME, COMMENT, TXN_DATE
+	</sql>
+
+	<!-- ����һ����¼ -->
+	<insert id="insertUserActionLog"
+		parameterType="com.lutongnet.cps.base.model.entity.system.UserActionLog.Value">
+		INSERT INTO T_USER_ACTION_LOG (
+			ID, USER_ID, ACTION_CODE, OPERATION_DESC, S_COL_1,
+			S_COL_2, S_COL_3, S_COL_4, I_COL_1, I_COL_2,
+			I_COL_3, D_COL_1, D_COL_2, D_COL_3, INPUT_PARAMS,
+			HTTP_RESP_CODE, HTTP_ERROR_MSG, THIRD_RESP_DATA, RESP_DATA, BUSINESS_RESULT_CODE,
+			EXCEPTION_INFO, STAYING_TIME, USING_TIME, COMMENT, TXN_DATE
+		) VALUES (
+			#{ID}, #{USER_ID}, #{ACTION_CODE}, #{OPERATION_DESC}, #{S_COL_1},
+			#{S_COL_2}, #{S_COL_3}, #{S_COL_4}, #{I_COL_1}, #{I_COL_2},
+			#{I_COL_3}, #{D_COL_1}, #{D_COL_2}, #{D_COL_3}, #{INPUT_PARAMS},
+			#{HTTP_RESP_CODE}, #{HTTP_ERROR_MSG}, #{THIRD_RESP_DATA},
+			#{RESP_DATA}, #{BUSINESS_RESULT_CODE},
+			#{EXCEPTION_INFO}, #{STAYING_TIME}, #{USING_TIME}, #{COMMENT}, #{TXN_DATE}
+		)
+	</insert>
+
+</mapper>

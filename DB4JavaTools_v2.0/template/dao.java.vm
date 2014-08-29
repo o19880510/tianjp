@@ -1,0 +1,17 @@
+#set( $className = ${StringUtil.noUnderLine($__TableValue.name).substring(1)} + "Dao")
+ 
+package xx.xx.vo;
+ 
+import java.sql.Timestamp;
+
+public class  $className {
+ 	
+#foreach($column in ${__TableValue.columnList}) 
+	private static final String C_$column.name = "$column.name";
+	#if($velocityCount % 5 == 0) ##每五个属性，增加空白行
+	
+	#end
+#end
+
+}
+ 

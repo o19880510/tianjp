@@ -1,0 +1,61 @@
+#set( $className = ${StringUtil.noUnderLine($__TableValue.name).substring(1)})
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="$className">
+
+	<resultMap id="${StringUtil.firstCharToLower(${className})}ResultMap" type="com.lutongnet.cps.base.model.entity.system.${className}Value">
+	#foreach($column in ${__TableValue.columnList})
+		#if(${column.PID})
+		<id column="${column.name}" property="${StringUtil.noUnderLine($column.name.toLowerCase())}" />
+		#else
+		<result column="${column.name}" property="${StringUtil.noUnderLine($column.name.toLowerCase())}" />
+		#end
+	#end
+	</resultMap>
+
+	<sql id="Base_Column_List">
+	#foreach($column in ${__TableValue.columnList}) ${column.name}#if($velocityCount != ${__TableValue.columnList.size()}),#end#if($velocityCount % 5 == 0)
+
+#end#end
+  	</sql>
+
+  
+  	<insert id="save$className" parameterType="com.lutongnet.cps.base.model.entity.system.${className}.Value">
+  		INSERT INTO ${__TableValue.name} (
+	  			#foreach($column in ${__TableValue.columnList})${column.name}#if($velocityCount != ${__TableValue.columnList.size()}), #end#if($velocityCount % 5 == 0)
+			
+				#end#end
+  		) VALUES (
+  				#foreach($column in ${__TableValue.columnList})#{${StringUtil.noUnderLine(${column.name})}}#if($velocityCount != ${__TableValue.columnList.size()}), #end#if($velocityCount % 5 == 0)
+
+				#end#end
+  		)
+  	</insert>
+  	<insert id="update$className" parameterType="com.lutongnet.cps.base.model.entity.system.${className}.Value">
+  	
+  		UPDATE ${__TableValue.name} SET 
+  			
+	  			#foreach($column in ${__TableValue.columnList})${column.name} = #{${StringUtil.noUnderLine(${column.name})}}#if($velocityCount != ${__TableValue.columnList.size()}), #end#if($velocityCount % 5 == 0)
+			
+				#end#end
+  	</insert>
+	
+	<select id="selectByPrimaryKey" resultMap="${StringUtil.firstCharToLower(${className})}ResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM ${__TableValue.name}
+		WHERE 
+		#foreach($column in ${__TableValue.columnPIDList})
+			${column.name} = #{${StringUtil.noUnderLine(${column.name})}}
+		#end
+	</select>
+	
+</mapper>
+
+public static class $className{
+	public static final String SAVE = ${className}.save$className;
+	public static final String UPDATE = ${className}.update$className;
+	public static final String SELECT_BY_PK =${className}.selectByPrimaryKey;
+}
+
+

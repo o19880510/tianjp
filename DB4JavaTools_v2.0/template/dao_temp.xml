@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao>
+	<base>
+		ENTER		_pkg;
+		ENTER		_importClass
+		ENTER
+		ENTER		_classHead _classBody
+	</base>
+	
+	<body>
+		ENTER		_constant
+		ENTER
+		ENTER		_QueryMethod
+		ENTER
+		ENTER		_CreateMethod
+		ENTER
+		ENTER		_UpdateMethod
+		ENTER
+		ENTER		_DeleteMethod
+	</body>
+	
+	<query>
+		ENTER		private static final String _querySqlName = _querySql
+
+		ENTER  	_queryMethodName{    
+
+		ENTER 		Object[] params = _queryAddParam ;  
+
+		ENTER 		_valueObject _voName = getJdbcTemplate().queryForObject(_querySqlName, params, getRowMapper());   
+		ENTER
+		ENTER 		return _voName;    
+		ENTER 	}    
+		
+		ENTER  	private RowMapper<_valueObject> getRowMapper() {    
+		ENTER  		return new RowMapper<_valueObject>(){   
+		ENTER  			public _valueObject mapRow(ResultSet rs, int index) throws SQLException {   
+		ENTER  				_valueObject  _voName = new _valueObject(); 
+		ENTER   
+		ENTER  				_setValue 
+		ENTER  				return _voName;    
+		ENTER  			}  
+		ENTER  		};   
+		ENTER 	}
+	</query>
+
+	<save>
+		ENTER 	private static final String _createSqlName = _createSql 
+		ENTER	_createMethodName{
+		ENTER	  		Object[] params = _createAddParam; 
+		ENTER	  		   
+		ENTER	  		getJdbcTemplate().update(_createSqlName, params);   
+				};
+	</save>
+
+	<update>
+		ENTER 	private static final String _updateSqlName = _updateSql 
+		ENTER	_updateMethodName{   
+		ENTER	  		Object[] params = _updateAddParam; 
+		ENTER	  		   
+		ENTER	  		getJdbcTemplate().update(_updateSqlName, params);   
+		ENTER	
+		ENTER	};
+	</update>
+
+	<delete>
+		ENTER	 private static final String _deleteSqlName = _deleteSql 
+		ENTER	 _deleteMethodName{   
+		ENTER	
+		ENTER	  		Object[] params = _deleteAddParam; 
+		ENTER	  		   
+		ENTER	  		getJdbcTemplate().update(_deleteSqlName, params);   
+		ENTER	
+				 };
+	</delete>
+</dao>
